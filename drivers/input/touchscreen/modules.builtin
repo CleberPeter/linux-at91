@@ -1,0 +1,3 @@
+kernel/drivers/input/touchscreen/of_touchscreen.ko
+kernel/drivers/input/touchscreen/resistive-adc-touch.ko
+kernel/drivers/input/touchscreen/stmpe-ts.ko

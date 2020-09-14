@@ -1,0 +1,46 @@
+!<thin>
+//                                              536       `
+media-device.o/
+media-devnode.o/
+media-entity.o/
+v4l2-core/v4l2-fwnode.o/
+v4l2-core/v4l2-dev.o/
+v4l2-core/v4l2-ioctl.o/
+v4l2-core/v4l2-device.o/
+v4l2-core/v4l2-fh.o/
+v4l2-core/v4l2-event.o/
+v4l2-core/v4l2-ctrls.o/
+v4l2-core/v4l2-subdev.o/
+v4l2-core/v4l2-clk.o/
+v4l2-core/v4l2-async.o/
+v4l2-core/v4l2-mc.o/
+v4l2-core/v4l2-common.o/
+v4l2-core/v4l2-dv-timings.o/
+v4l2-core/videobuf2-core.o/
+v4l2-core/videobuf2-v4l2.o/
+v4l2-core/videobuf2-memops.o/
+v4l2-core/videobuf2-dma-contig.o/
+platform/atmel/atmel-isc.o/
+platform/atmel/atmel-isi.o/
+/0              0           0     0     644     12508     `
+/16            /0           0     0     644     6652      `
+/33             0           0     0     644     18188     `
+/49             0           0     0     644     7508      `
+/74             0           0     0     644     20076     `
+/96             0           0     0     644     61292     `
+/120            0           0     0     644     6684      `
+/145            0           0     0     644     4528      `
+/166            0           0     0     644     8196      `
+/190            0           0     0     644     74256     `
+/214            0           0     0     644     10424     `
+/239            0           0     0     644     8452      `
+/261            0           0     0     644     6480      `
+/285            0           0     0     644     5908      `
+/306            0           0     0     644     8072      `
+/331            0           0     0     644     26572     `
+/360            0           0     0     644     40360     `
+/388            0           0     0     644     21100     `
+/416            0           0     0     644     2788      `
+/446            0           0     0     644     13376     `
+/480            0           0     0     644     28564     `
+/508            0           0     0     644     19708     `

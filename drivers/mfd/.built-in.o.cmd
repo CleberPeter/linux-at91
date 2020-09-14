@@ -1,0 +1,1 @@
+cmd_drivers/mfd/built-in.o :=  rm -f drivers/mfd/built-in.o; arm-linux-gnueabi-ar rcSTPD drivers/mfd/built-in.o drivers/mfd/act8945a.o drivers/mfd/stmpe.o drivers/mfd/stmpe-i2c.o drivers/mfd/mfd-core.o drivers/mfd/at91-usart.o drivers/mfd/atmel-flexcom.o drivers/mfd/atmel-hlcdc.o drivers/mfd/atmel-smc.o drivers/mfd/syscon.o 

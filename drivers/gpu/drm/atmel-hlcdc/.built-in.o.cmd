@@ -1,0 +1,1 @@
+cmd_drivers/gpu/drm/atmel-hlcdc/built-in.o :=  rm -f drivers/gpu/drm/atmel-hlcdc/built-in.o; arm-linux-gnueabi-ar rcSTPD drivers/gpu/drm/atmel-hlcdc/built-in.o drivers/gpu/drm/atmel-hlcdc/atmel-hlcdc-dc.o 

@@ -1,0 +1,4 @@
+kernel/drivers/power/reset/at91-poweroff.ko
+kernel/drivers/power/reset/at91-reset.ko
+kernel/drivers/power/reset/at91-sama5d2_shdwc.ko
+kernel/drivers/power/supply/act8945a_charger.ko

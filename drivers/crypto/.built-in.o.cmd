@@ -1,0 +1,1 @@
+cmd_drivers/crypto/built-in.o :=  rm -f drivers/crypto/built-in.o; arm-linux-gnueabi-ar rcSTPD drivers/crypto/built-in.o drivers/crypto/atmel-aes.o drivers/crypto/atmel-sha.o drivers/crypto/atmel-tdes.o 

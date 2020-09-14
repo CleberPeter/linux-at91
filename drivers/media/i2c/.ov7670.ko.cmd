@@ -1,0 +1,1 @@
+cmd_drivers/media/i2c/ov7670.ko := arm-linux-gnueabi-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o drivers/media/i2c/ov7670.ko drivers/media/i2c/ov7670.o drivers/media/i2c/ov7670.mod.o ;  true

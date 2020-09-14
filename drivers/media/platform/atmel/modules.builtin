@@ -1,0 +1,2 @@
+kernel/drivers/media/platform/atmel/atmel-isc.ko
+kernel/drivers/media/platform/atmel/atmel-isi.ko

@@ -1,0 +1,23 @@
+!<thin>
+//                                              134       `
+core.o/
+dummy.o/
+fixed-helper.o/
+helpers.o/
+devres.o/
+of_regulator.o/
+fixed.o/
+virtual.o/
+act8865-regulator.o/
+act8945a-regulator.o/
+
+/0              0           0     0     644     71404     `
+/8              0           0     0     644     3668      `
+/17             0           0     0     644     1820      `
+/33             0           0     0     644     9856      `
+/44             0           0     0     644     9112      `
+/54             0           0     0     644     7972      `
+/70             0           0     0     644     5344      `
+/79             0           0     0     644     8136      `
+/90             0           0     0     644     17908     `
+/111            0           0     0     644     9444      `

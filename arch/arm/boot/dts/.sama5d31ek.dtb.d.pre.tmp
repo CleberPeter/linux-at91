@@ -1,0 +1,12 @@
+sama5d31ek.o: arch/arm/boot/dts/sama5d31ek.dts \
+ arch/arm/boot/dts/sama5d31.dtsi arch/arm/boot/dts/sama5d3.dtsi \
+ arch/arm/boot/dts/skeleton.dtsi \
+ scripts/dtc/include-prefixes/dt-bindings/dma/at91.h \
+ scripts/dtc/include-prefixes/dt-bindings/pinctrl/at91.h \
+ scripts/dtc/include-prefixes/dt-bindings/interrupt-controller/irq.h \
+ scripts/dtc/include-prefixes/dt-bindings/gpio/gpio.h \
+ scripts/dtc/include-prefixes/dt-bindings/clock/at91.h \
+ arch/arm/boot/dts/sama5d3_lcd.dtsi arch/arm/boot/dts/sama5d3_emac.dtsi \
+ arch/arm/boot/dts/sama5d3_mci2.dtsi arch/arm/boot/dts/sama5d3_uart.dtsi \
+ arch/arm/boot/dts/sama5d3xmb.dtsi arch/arm/boot/dts/sama5d3xcm.dtsi \
+ arch/arm/boot/dts/sama5d3xmb_emac.dtsi arch/arm/boot/dts/sama5d3xdm.dtsi

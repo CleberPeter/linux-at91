@@ -1,0 +1,1 @@
+cmd_sound/soc/atmel/snd-atmel-soc-tse850-pcm5142.ko := arm-linux-gnueabi-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o sound/soc/atmel/snd-atmel-soc-tse850-pcm5142.ko sound/soc/atmel/snd-atmel-soc-tse850-pcm5142.o sound/soc/atmel/snd-atmel-soc-tse850-pcm5142.mod.o ;  true

@@ -1,0 +1,1 @@
+cmd_drivers/irqchip/built-in.o :=  rm -f drivers/irqchip/built-in.o; arm-linux-gnueabi-ar rcSTPD drivers/irqchip/built-in.o drivers/irqchip/irqchip.o drivers/irqchip/irq-atmel-aic-common.o drivers/irqchip/irq-atmel-aic5.o 

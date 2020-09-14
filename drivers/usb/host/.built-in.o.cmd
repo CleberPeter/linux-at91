@@ -1,0 +1,1 @@
+cmd_drivers/usb/host/built-in.o :=  rm -f drivers/usb/host/built-in.o; arm-linux-gnueabi-ar rcSTPD drivers/usb/host/built-in.o drivers/usb/host/ehci-hcd.o drivers/usb/host/ehci-atmel.o drivers/usb/host/ohci-hcd.o drivers/usb/host/ohci-at91.o 

@@ -1,0 +1,22 @@
+!<thin>
+//                                              136       `
+core.o/
+netlink.o/
+af_nfc.o/
+rawsock.o/
+llcp_core.o/
+llcp_commands.o/
+llcp_sock.o/
+digital_core.o/
+digital_technology.o/
+digital_dep.o/
+/0              0           0     0     644     19148     `
+/8              0           0     0     644     25704     `
+/19             0           0     0     644     3128      `
+/29             0           0     0     644     8372      `
+/40             0           0     0     644     17908     `
+/53            /0           0     0     644     9528      `
+/70             0           0     0     644     12620     `
+/83             0           0     0     644     14824     `
+/99             0           0     0     644     13288     `
+/121            0           0     0     644     15220     `

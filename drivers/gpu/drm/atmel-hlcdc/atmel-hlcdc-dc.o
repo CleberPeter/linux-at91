@@ -1,0 +1,11 @@
+!<thin>
+//                                              82        `
+atmel_hlcdc_crtc.o/
+atmel_hlcdc_dc.o/
+atmel_hlcdc_output.o/
+atmel_hlcdc_plane.o/
+
+/0              0           0     0     644     7608      `
+/20             0           0     0     644     16728     `
+/38             0           0     0     644     2044      `
+/60             0           0     0     644     10684     `

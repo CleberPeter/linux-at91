@@ -1,0 +1,1 @@
+cmd_drivers/clocksource/built-in.o :=  rm -f drivers/clocksource/built-in.o; arm-linux-gnueabi-ar rcSTPD drivers/clocksource/built-in.o drivers/clocksource/timer-of.o drivers/clocksource/timer-probe.o drivers/clocksource/timer-atmel-pit.o drivers/clocksource/tcb_clksrc.o 
