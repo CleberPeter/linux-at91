@@ -12,7 +12,7 @@ make ARCH=arm menuconfig
 
 ## Build
 
-make ARCH=arm
+make ARCH=arm LOCALVERSION=
 
 ## Binary
 

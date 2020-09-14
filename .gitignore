@@ -5,7 +5,12 @@
 **/*.order
 **/*.*release
 **/*.*builtin
+**/.*.cmd
+**/.*.tmp
 **/.*.o.cmd
+**/*.mod.c
+**/*.s
+**/*.a
 System.map
 include/generated/compile.h
 include/generated/utsrelease.h
@@ -16,3 +21,8 @@ vmlinux
 .vmlinux.cmd
 vmlinux.o
 vmlinux
+Module.symvers
+arch/arm/include/generated/*
+include/config/*
+include/generated/
+usr/.initramfs_data.cpio.d
