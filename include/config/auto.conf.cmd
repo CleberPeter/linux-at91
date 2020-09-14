@@ -1256,7 +1256,7 @@ deps_config := \
 include/config/auto.conf: \
 	$(deps_config)
 
-ifneq "$(KERNELVERSION)" "4.14.88-Companytec"
+ifneq "$(KERNELVERSION)" "4.14.88-companytec"
 include/config/auto.conf: FORCE
 endif
 ifneq "$(ARCH)" "arm"

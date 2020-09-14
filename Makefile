@@ -2,7 +2,7 @@
 VERSION = 4
 PATCHLEVEL = 14
 SUBLEVEL = 88
-EXTRAVERSION = -Companytec
+EXTRAVERSION = -companytec
 NAME = Petit Gorille
 
 # *DOCUMENTATION*

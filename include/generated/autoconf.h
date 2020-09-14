@@ -1,7 +1,7 @@
 /*
  *
  * Automatically generated file; DO NOT EDIT.
- * Linux/arm 4.14.88-Companytec Kernel Configuration
+ * Linux/arm 4.14.88-companytec Kernel Configuration
  *
  */
 #define CONFIG_HAVE_ARCH_SECCOMP_FILTER 1
