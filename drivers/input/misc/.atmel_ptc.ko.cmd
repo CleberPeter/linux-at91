@@ -1,1 +1,0 @@
-cmd_drivers/input/misc/atmel_ptc.ko := arm-linux-gnueabi-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o drivers/input/misc/atmel_ptc.ko drivers/input/misc/atmel_ptc.o drivers/input/misc/atmel_ptc.mod.o ;  true

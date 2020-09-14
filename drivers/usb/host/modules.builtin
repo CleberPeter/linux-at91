@@ -1,4 +1,0 @@
-kernel/drivers/usb/host/ehci-hcd.ko
-kernel/drivers/usb/host/ehci-atmel.ko
-kernel/drivers/usb/host/ohci-hcd.ko
-kernel/drivers/usb/host/ohci-at91.ko

@@ -1,8 +1,0 @@
-!<thin>
-//                                              52        `
-serial_core.o/
-atmel_serial.o/
-serial_mctrl_gpio.o/
-/0              0           0     0     644     38708     `
-/15             0           0     0     644     29348     `
-/31             0           0     0     644     6824      `

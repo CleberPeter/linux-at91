@@ -1,1 +1,0 @@
-cmd_drivers/leds/leds-blinkm.ko := arm-linux-gnueabi-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o drivers/leds/leds-blinkm.ko drivers/leds/leds-blinkm.o drivers/leds/leds-blinkm.mod.o ;  true

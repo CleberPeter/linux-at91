@@ -1,8 +1,0 @@
-kernel/drivers/media/i2c/ov2640.ko
-kernel/drivers/media/i2c/ov7640.ko
-kernel/drivers/media/i2c/ov7670.ko
-kernel/drivers/media/i2c/ov7740.ko
-kernel/drivers/media/i2c/ov9650.ko
-kernel/drivers/media/i2c/ov2659.ko
-kernel/drivers/media/v4l2-core/videobuf2-vmalloc.ko
-kernel/drivers/media/usb/uvc/uvcvideo.ko

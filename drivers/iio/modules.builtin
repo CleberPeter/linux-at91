@@ -1,6 +1,0 @@
-kernel/drivers/iio/industrialio.ko
-kernel/drivers/iio/adc/at91_adc.ko
-kernel/drivers/iio/adc/at91-sama5d2_adc.ko
-kernel/drivers/iio/buffer/industrialio-buffer-cb.ko
-kernel/drivers/iio/buffer/industrialio-triggered-buffer.ko
-kernel/drivers/iio/buffer/kfifo_buf.ko

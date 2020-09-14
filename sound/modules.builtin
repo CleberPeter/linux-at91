@@ -1,8 +1,0 @@
-kernel/sound/soundcore.ko
-kernel/sound/core/snd.ko
-kernel/sound/core/snd-timer.ko
-kernel/sound/core/snd-pcm.ko
-kernel/sound/core/snd-pcm-dmaengine.ko
-kernel/sound/soc/snd-soc-core.ko
-kernel/sound/soc/atmel/snd-soc-atmel-pcm-dma.ko
-kernel/sound/soc/atmel/snd-atmel-soc-classd.ko

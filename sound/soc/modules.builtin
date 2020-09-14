@@ -1,3 +1,0 @@
-kernel/sound/soc/snd-soc-core.ko
-kernel/sound/soc/atmel/snd-soc-atmel-pcm-dma.ko
-kernel/sound/soc/atmel/snd-atmel-soc-classd.ko
