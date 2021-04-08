@@ -25,6 +25,8 @@
  *    http://www.glyn.com/Products/Displays
  */
 
+#define DEBUG
+
 #include <linux/module.h>
 #include <linux/ratelimit.h>
 #include <linux/irq.h>
@@ -246,6 +248,8 @@ static irqreturn_t edt_ft5x06_ts_isr(int irq, void *dev_id)
 
 		if (!down)
 			continue;
+
+		printk("x: %d,y: %d\n", x, y);
 
 		touchscreen_report_pos(tsdata->input, &tsdata->prop, x, y,
 				       true);

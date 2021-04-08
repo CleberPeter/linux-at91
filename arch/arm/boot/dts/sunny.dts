@@ -277,14 +277,15 @@
 							reg = <0>;
 							remote-endpoint = <&panel_input>;
 						};
-					};
-					
+					};					
+
 				};
 
 				hlcdc_pwm: hlcdc-pwm {
 					pinctrl-names = "default";
 					pinctrl-0 = <&pinctrl_lcd_pwm>;
 				};
+
 			};
 
 			backlight: backlight {
@@ -305,7 +306,20 @@
 			};
 
 			panel: panel {
-				compatible = "shelly,sca07010-bfn-lnn", "simple-panel";
+
+				/* blaze - 800 x 480
+					compatible = "shelly,sca07010-bfn-lnn", "simple-panel"; 
+				*/
+				
+				/* Mondial - FPC070-50-03 - 1024x600 
+				compatible = "cdtech,s070pws19hp-fc21", "simple-panel";
+				*/
+				
+				
+				/* Mondial - FPC070-50-02 - 800 x 480 */
+				compatible = "cdtech,s070swv29hg-dc44", "simple-panel";
+				
+
 				backlight = <&backlight>;
 				power-supply = <&panel_reg>;
 				#address-cells = <1>;
@@ -533,23 +547,28 @@
 					};
 
 					u_boot@00004000 {
-						label = "bootloader";
+						label = "u-boot";
 						reg = <0x00004000 0x00074000>;
 					};
 
 					dtb@00078000 {
 						label = "device_tree";
-						reg = <0x00078000 0x0000f000>;
+						reg = <0x00078000 0x0000D000>;
 					};
 
 					kernel@00087000 {
 						label = "kernel";
 						reg = <0x00087000 0x003C4000>;
 					};
+
+					splash@00087000 {
+						label = "splash_image";
+						reg = <0x0044B000 0x000BC000>;
+					};
 					
 					data@0044B000 {
 						label = "data";
-						reg = <0x0044B000 0x003b5000>;
+						reg = <0x00507000 0x002F9000>;
 					};
 				};
 
@@ -623,7 +642,7 @@
 
 				status = "okay";
 
-				stmpe811@41 {
+				/*stmpe811@41 {
 					compatible = "st,stmpe811";
 					reg = <0x41>;
 					interrupt-parent = <&pioA>;
@@ -643,6 +662,18 @@
 						st,fraction-z = <7>;
 						st,i-drive = <0>;
 					};
+				};*/
+
+				polytouch: edt-ft5x06@38 {
+					compatible = "edt,edt-ft5406", "edt,edt-ft5x06";
+					reg = <0x38>;
+					interrupt-parent = <&pioA>;
+					interrupts = <PIN_PD6 0x0>;
+					pinctrl-names = "default";
+					pinctrl-0 = <&pinctrl_edt_ft5x06>;
+					
+					/*reset-gpios = <&gpio2 6 GPIO_ACTIVE_LOW>;
+					wake-gpios = <&gpio4 9 GPIO_ACTIVE_HIGH>;*/
 				};
 				
 			};
@@ -831,7 +862,13 @@
 					bias-pull-up;
 				};
 
-				pinctrl_stmpe811: pinctrl_stmpe811 {
+				/*pinctrl_stmpe811: pinctrl_stmpe811 {
+					pinmux = <PIN_PD6__GPIO>;
+					bias-pull-up;
+					input-debounce = <1>;
+				};*/
+
+				pinctrl_edt_ft5x06: pinctrl_edt_ft5x06 {
 					pinmux = <PIN_PD6__GPIO>;
 					bias-pull-up;
 					input-debounce = <1>;

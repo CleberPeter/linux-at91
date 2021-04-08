@@ -19,6 +19,8 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// #define DEBUG
+
 #include <linux/clk.h>
 #include <linux/irq.h>
 #include <linux/irqchip.h>
@@ -400,6 +402,13 @@ atmel_hlcdc_dc_mode_valid(struct atmel_hlcdc_dc *dc,
 	int hfront_porch = mode->hsync_start - mode->hdisplay;
 	int hback_porch = mode->htotal - mode->hsync_end;
 	int hsync_len = mode->hsync_end - mode->hsync_start;
+
+	/*printk("vfront_porch: %d\n", vfront_porch);
+	printk("vback_porch: %d\n", vback_porch);
+	printk("vsync_len: %d\n", vsync_len);
+	printk("hfront_porch: %d\n", hfront_porch);
+	printk("hback_porch: %d\n", hback_porch);
+	printk("hsync_len: %d\n", hsync_len);*/
 
 	if (hsync_len > dc->desc->max_spw + 1 || hsync_len < 1)
 		return MODE_HSYNC;
