@@ -614,7 +614,8 @@
 					reg = <2>;
 					compatible = "ti,trf7970a";
 					spi-max-frequency = <2000000>;
-					vin-supply = <&vddin_3v3>;
+					/*vin-supply = <&vddin_3v3>;*/
+					vin-supply = <&vddin_5v>;
 					clock-frequency = <13560000>;
 					interrupt-parent = <&pioA>;
 					interrupts = <PIN_PD7 0x0>;
