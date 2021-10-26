@@ -12,6 +12,8 @@
  * the License as published by the Free Software Foundation.
  */
 
+// #define DEBUG
+
 #include <linux/module.h>
 #include <linux/device.h>
 #include <linux/netdevice.h>
@@ -653,6 +655,9 @@ static int trf7970a_transmit(struct trf7970a *trf, struct sk_buff *skb,
 	struct spi_message m;
 	unsigned int timeout;
 	int ret;
+	
+	print_hex_dump_debug("trf7970a prefix data: ", DUMP_PREFIX_NONE,
+			     16, 1, prefix, prefix_len, false);
 
 	print_hex_dump_debug("trf7970a tx data: ", DUMP_PREFIX_NONE,
 			     16, 1, skb->data, len, false);

@@ -23,7 +23,7 @@
  *
  */
 
-#define DEBUG
+// #define DEBUG
 
 #include <linux/tty.h>
 #include <linux/ioport.h>
