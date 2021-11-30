@@ -236,6 +236,11 @@
 
 			macb0: ethernet@f8008000 {
 				status = "okay";
+				
+				phy: ethernet-phy@7 {
+				   reg = <7>;
+				   micrel,led-mode = <0>;
+			       };
 			};
 
 			tcb0: timer@f800c000 {

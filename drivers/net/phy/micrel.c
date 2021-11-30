@@ -32,6 +32,7 @@
 
 /* Operation Mode Strap Override */
 #define MII_KSZPHY_OMSO				0x16
+#define KSZPHY_OMSO_FACTORY_TEST		BIT(15)
 #define KSZPHY_OMSO_B_CAST_OFF			BIT(9)
 #define KSZPHY_OMSO_NAND_TREE_ON		BIT(5)
 #define KSZPHY_OMSO_RMII_OVERRIDE		BIT(1)
@@ -524,6 +525,25 @@ static int ksz9031_enable_edpd(struct phy_device *phydev)
 				      reg | MII_KSZ9031RN_EDPD_ENABLE);
 }
 
+static int ksz8081_config_init(struct phy_device *phydev)
+{
+	/* KSZPHY_OMSO_FACTORY_TEST is set at de-assertion of the reset line
+	 * based on the TXC pin. If a pull-down is missing, the factory test
+	 * mode should be cleared by manually writing a 0.
+	 */
+	// phy_clear_bits(phydev, MII_KSZPHY_OMSO, KSZPHY_OMSO_FACTORY_TEST);
+	
+	int new, ret;
+
+	ret = phy_read(phydev, MII_KSZPHY_OMSO);
+	
+	new = ret & ~KSZPHY_OMSO_FACTORY_TEST;
+	
+	ret = phy_write(phydev, MII_KSZPHY_OMSO, new);
+	
+	return kszphy_config_init(phydev);
+}
+
 static int ksz9031_config_init(struct phy_device *phydev)
 {
 	const struct device *dev = &phydev->mdio.dev;
@@ -922,7 +942,7 @@ static struct phy_driver ksphy_driver[] = {
 	.flags		= PHY_HAS_INTERRUPT,
 	.driver_data	= &ksz8081_type,
 	.probe		= kszphy_probe,
-	.config_init	= kszphy_config_init,
+	.config_init	= ksz8081_config_init,
 	.config_aneg	= genphy_config_aneg,
 	.read_status	= genphy_read_status,
 	.ack_interrupt	= kszphy_ack_interrupt,
