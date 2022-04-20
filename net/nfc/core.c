@@ -19,7 +19,7 @@
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
  
-#define DEBUG
+//#define DEBUG
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": %s: " fmt, __func__
 
