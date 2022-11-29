@@ -10,6 +10,8 @@
  * (at your option) any later version.
  */
 
+// #define DEBUG
+
 #include <linux/genalloc.h>
 #include <linux/io.h>
 #include <linux/of_address.h>
@@ -63,6 +65,7 @@ static struct at91_pm_data pm_data = {
 
 static int at91_pm_valid_state(suspend_state_t state)
 {
+	//printk("at91_pm_valid_state - state: %d\n", state);
 	switch (state) {
 		case PM_SUSPEND_ON:
 		case PM_SUSPEND_STANDBY:
@@ -83,11 +86,55 @@ static struct at91_pm_bu {
 	phys_addr_t resume;
 } *pm_bu;
 
+struct at91_pm_sfrbu_regs {
+	struct {
+		u32 key;
+		u32 ctrl;
+		u32 state;
+		u32 softsw;
+	} pswbu;
+};
+
+struct at91_pm_sfrbu_regs sfrbu_regs;
+
+static void at91_pm_switch_ba_to_vbat(void)
+{
+	
+	
+	unsigned int offset = offsetof(struct at91_pm_sfrbu_regs, pswbu);
+	unsigned int val;
+	
+	//printk("at91_pm_switch_ba_to_vbat \n");
+
+	/* Just for safety. */
+	if (!pm_data.sfrbu)
+		return;
+
+	val = readl(pm_data.sfrbu + offset);
+	printk("pm_data.sfrbu: %02X\n", val);
+
+	/* Already on VBAT. */
+	if (!(val & sfrbu_regs.pswbu.state))
+		return;
+
+	val &= ~sfrbu_regs.pswbu.softsw;
+	val |= sfrbu_regs.pswbu.key | sfrbu_regs.pswbu.ctrl;
+	
+	printk("pm_data.sfrbu: %02X\n", val);
+	writel(val, pm_data.sfrbu + offset);
+
+	/* Wait for update. */
+	val = readl(pm_data.sfrbu + offset);
+	while (val & sfrbu_regs.pswbu.state)
+		val = readl(pm_data.sfrbu + offset);
+}
+
 /*
  * Called after processes are frozen, but before we shutdown devices.
  */
 static int at91_pm_begin(suspend_state_t state)
 {
+	//printk("at91_pm_begin - state: %d\n", state);
 	switch (state) {
 	case PM_SUSPEND_MEM:
 		pm_data.mode = pm_data.suspend_mode;
@@ -110,9 +157,11 @@ static int at91_pm_begin(suspend_state_t state)
  */
 static int at91_pm_verify_clocks(void)
 {
+	
 	unsigned long scsr;
 	int i;
 
+	//printk("at91_pm_verify_clocks\n");
 	scsr = readl(pm_data.pmc + AT91_PMC_SCSR);
 
 	/* USB must not be using PLLB */
@@ -149,12 +198,14 @@ static int at91_pm_verify_clocks(void)
  */
 int at91_suspend_entering_slow_clock(void)
 {
+	//printk("at91_suspend_entering_slow_clock\n");
 	return (pm_data.mode >= AT91_PM_ULP0);
 }
 EXPORT_SYMBOL(at91_suspend_entering_slow_clock);
 
 int at91_suspend_entering_backup(void)
 {
+	//printk("at91_suspend_entering_backup\n");
 	return (pm_data.mode == AT91_PM_BACKUP);
 }
 EXPORT_SYMBOL(at91_suspend_entering_backup);
@@ -165,6 +216,7 @@ extern u32 at91_pm_suspend_in_sram_sz;
 
 static int at91_suspend_finish(unsigned long val)
 {
+	//printk("at91_suspend_finish\n");
 	flush_cache_all();
 	outer_disable();
 
@@ -175,8 +227,10 @@ static int at91_suspend_finish(unsigned long val)
 
 static void at91_pm_suspend(suspend_state_t state)
 {
+	//printk("at91_pm_suspend - state: %d\n", state);
 	if (pm_data.mode == AT91_PM_BACKUP) {
 		pm_bu->suspended = 1;
+		at91_pm_switch_ba_to_vbat();
 
 		cpu_suspend(0, at91_suspend_finish);
 
@@ -204,6 +258,7 @@ static void at91_pm_suspend(suspend_state_t state)
  */
 static int at91_pm_enter(suspend_state_t state)
 {
+	//printk("at91_pm_enter - state: %d\n", state);
 #ifdef CONFIG_PINCTRL_AT91
 	at91_pinctrl_gpio_suspend();
 #endif
@@ -243,6 +298,7 @@ error:
  */
 static void at91_pm_end(void)
 {
+	//printk("at91_pm_end\n");
 	regulator_suspend_end();
 }
 
@@ -269,6 +325,7 @@ static struct platform_device at91_cpuidle_device = {
  */
 static void at91rm9200_standby(void)
 {
+	//printk("at91rm9200_standby\n");
 	asm volatile(
 		"b    1f\n\t"
 		".align    5\n\t"
@@ -285,11 +342,14 @@ static void at91rm9200_standby(void)
  */
 static void at91_ddr_standby(void)
 {
+	
 	/* Those two values allow us to delay self-refresh activation
 	 * to the maximum. */
 	u32 lpr0, lpr1 = 0;
 	u32 mdr, saved_mdr0, saved_mdr1 = 0;
 	u32 saved_lpr0, saved_lpr1 = 0;
+	
+	//printk("at91_ddr_standby\n");
 
 	/* LPDDR1 --> force DDR2 mode during self-refresh */
 	saved_mdr0 = at91_ramc_read(0, AT91_DDRSDRC_MDR);
@@ -332,8 +392,11 @@ static void at91_ddr_standby(void)
 
 static void sama5d3_ddr_standby(void)
 {
+	
 	u32 lpr0;
 	u32 saved_lpr0;
+	
+	//printk("sama5d3_ddr_standby\n");
 
 	saved_lpr0 = at91_ramc_read(0, AT91_DDRSDRC_LPR);
 	lpr0 = saved_lpr0 & ~AT91_DDRSDRC_LPCB;
@@ -351,8 +414,11 @@ static void sama5d3_ddr_standby(void)
  */
 static void at91sam9_sdram_standby(void)
 {
+	
 	u32 lpr0, lpr1 = 0;
 	u32 saved_lpr0, saved_lpr1 = 0;
+	
+	//printk("at91sam9_sdram_standby\n");
 
 	if (pm_data.ramc[1]) {
 		saved_lpr1 = at91_ramc_read(1, AT91_SDRAMC_LPR);
@@ -398,11 +464,14 @@ static const struct of_device_id ramc_ids[] __initconst = {
 
 static __init void at91_dt_ramc(void)
 {
+	
 	struct device_node *np;
 	const struct of_device_id *of_id;
 	int idx = 0;
 	void *standby = NULL;
 	const struct ramc_info *ramc;
+	
+	//printk("at91_dt_ramc\n");
 
 	for_each_matching_node_and_match(np, ramc_ids, &of_id) {
 		pm_data.ramc[idx] = of_iomap(np, 0);
@@ -430,6 +499,7 @@ static __init void at91_dt_ramc(void)
 
 static void at91rm9200_idle(void)
 {
+	//printk("at91rm9200_idle\n");
 	/*
 	 * Disable the processor clock.  The processor will be automatically
 	 * re-enabled by an interrupt or by a reset.
@@ -439,17 +509,21 @@ static void at91rm9200_idle(void)
 
 static void at91sam9_idle(void)
 {
+	//printk("at91sam9_idle\n");
 	writel(AT91_PMC_PCK, pm_data.pmc + AT91_PMC_SCDR);
 	cpu_do_idle();
 }
 
 static void __init at91_pm_sram_init(void)
 {
+	
 	struct gen_pool *sram_pool;
 	phys_addr_t sram_pbase;
 	unsigned long sram_base;
 	struct device_node *node;
 	struct platform_device *pdev = NULL;
+	
+	//printk("at91_pm_sram_init\n");
 
 	for_each_compatible_node(node, NULL, "mmio-sram") {
 		pdev = of_find_device_by_node(node);
@@ -491,9 +565,12 @@ static void __init at91_pm_sram_init(void)
 
 static void __init at91_pm_backup_init(void)
 {
+	
 	struct gen_pool *sram_pool;
 	struct device_node *np;
 	struct platform_device *pdev = NULL;
+	
+	//printk("at91_pm_backup_init\n");
 
 	if ((pm_data.standby_mode != AT91_PM_BACKUP) &&
 	    (pm_data.suspend_mode != AT91_PM_BACKUP))
@@ -542,6 +619,8 @@ static void __init at91_pm_backup_init(void)
 		pr_warn("%s: unable to alloc securam!\n", __func__);
 		goto securam_fail;
 	}
+	
+	//printk("at91_pm_backup_end\n");
 
 	pm_bu->suspended = 0;
 	pm_bu->canary = __pa_symbol(&canary);
@@ -585,9 +664,12 @@ static const struct of_device_id atmel_pmc_ids[] __initconst = {
 
 static void __init at91_pm_init(void (*pm_idle)(void))
 {
+	
 	struct device_node *pmc_np;
 	const struct of_device_id *of_id;
 	const struct pmc_info *pmc;
+	
+	//printk("at91_pm_init\n");
 
 	if (at91_cpuidle_device.dev.platform_data)
 		platform_device_register(&at91_cpuidle_device);
@@ -619,10 +701,13 @@ static void __init at91_pm_init(void (*pm_idle)(void))
 
 static int __init at91_pmc_fast_startup_init(void)
 {
+	
 	struct device_node *np, *cnp;
 	struct regmap *regmap;
 	u32 input, input_mask;
 	u32 mode = 0, polarity = 0;
+	
+	//printk("at91_pmc_fast_startup_init\n");
 
 	np = of_find_compatible_node(NULL, NULL,
 				     "atmel,sama5d2-pmc-fast-startup");
@@ -681,6 +766,7 @@ static int __init at91_pmc_fast_startup_init(void)
 
 void __init at91rm9200_pm_init(void)
 {
+	//printk("at91rm9200_pm_init\n");
 	if (!IS_ENABLED(CONFIG_SOC_AT91RM9200))
 		return;
 
@@ -696,6 +782,7 @@ void __init at91rm9200_pm_init(void)
 
 void __init at91sam9_pm_init(void)
 {
+	//printk("at91sam9_pm_init\n");
 	if (!IS_ENABLED(CONFIG_SOC_AT91SAM9))
 		return;
 
@@ -705,6 +792,7 @@ void __init at91sam9_pm_init(void)
 
 void __init sama5_pm_init(void)
 {
+	//printk("sama5_pm_init\n");
 	if (!IS_ENABLED(CONFIG_SOC_SAMA5))
 		return;
 
@@ -714,19 +802,28 @@ void __init sama5_pm_init(void)
 
 void __init sama5d2_pm_init(void)
 {
+	//printk("sama5d2_pm_init\n");
 	if (!IS_ENABLED(CONFIG_SOC_SAMA5D2))
 		return;
 
 	at91_pm_backup_init();
 	sama5_pm_init();
 	at91_pmc_fast_startup_init();
+	
+	sfrbu_regs.pswbu.key = (0x4BD20C << 8);
+	sfrbu_regs.pswbu.ctrl = BIT(0);
+	sfrbu_regs.pswbu.softsw = BIT(1);
+	sfrbu_regs.pswbu.state = BIT(3);
 }
 
 static int __init at91_pm_modes_select(char *str)
 {
+	
 	char *s;
 	substring_t args[MAX_OPT_ARGS];
 	int standby, suspend;
+	
+	//printk("at91_pm_modes_select\n");
 
 	if (!str)
 		return 0;

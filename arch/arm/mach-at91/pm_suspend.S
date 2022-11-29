@@ -119,7 +119,8 @@ ENTRY(at91_pm_suspend_in_sram)
 	/* Active the self-refresh mode */
 	mov	r0, #SRAMC_SELF_FRESH_ACTIVE
 	bl	at91_sramc_self_refresh
-
+	
+	
 	ldr	r0, .pm_mode
 	cmp	r0, #AT91_PM_STANDBY
 	beq	standby
@@ -157,12 +158,17 @@ ENTRY(at91_backup_mode)
 
 	wait_mckrdy
 
-	/*BUMEN*/
+	/* BUMEN SFRBU_DDRBUMCR */
 	ldr	r0, .sfr
 	mov	tmp1, #0x1
 	str	tmp1, [r0, #0x10]
-
-	/* Shutdown */
+	
+	/* Wait for it. */
+1:	ldr	tmp1, [r0, #0x10]
+	tst	tmp1, #0x1
+	beq	1b
+	
+	/* Shutdown SHDW_CR*/
 	ldr	r0, .shdwc
 	mov	tmp1, #0xA5000000
 	add	tmp1, tmp1, #0x1
