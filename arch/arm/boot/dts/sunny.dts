@@ -605,7 +605,7 @@
 				rtc@0 {
 					compatible = "nxp,rtc-pcf2123";
 					reg = <0>; /* cs number */
-					spi-cs-high;
+					spi-max-frequency = <500000>;
 				};
 				
 				/* LCD */
