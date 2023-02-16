@@ -581,6 +581,7 @@
 
 			spi1: spi@fc000000 {
 				pinctrl-names = "default";
+				cs-gpios = <&pioA PIN_PC4 GPIO_ACTIVE_LOW>, <&pioA PIN_PC5 GPIO_ACTIVE_LOW>, <&pioA PIN_PC6 GPIO_ACTIVE_LOW>;
 				pinctrl-0 = <&pinctrl_spi1 &pinctrl_spi1_cs_eeprom &pinctrl_spi1_cs_lcd &pinctrl_spi1_cs_rfid>;
 				status = "okay";
 				
@@ -605,7 +606,7 @@
 				rtc@0 {
 					compatible = "nxp,rtc-pcf2123";
 					reg = <0>; /* cs number */
-					spi-max-frequency = <500000>;
+					spi-max-frequency = <2000000>;
 				};
 				
 				/* LCD */
@@ -707,17 +708,17 @@
 
 				
 				pinctrl_spi1_cs_eeprom: spi1_cs_eeprom {
-					pinmux = <PIN_PC4__SPI1_NPCS0>;
+					pinmux = <PIN_PC4__GPIO>;
 					bias-disable;
 				};
 
 				pinctrl_spi1_cs_lcd: spi1_cs_lcd {
-					pinmux = <PIN_PC5__SPI1_NPCS1>;
+					pinmux = <PIN_PC5__GPIO>;
 					bias-disable;
 				};
 
 				pinctrl_spi1_cs_rfid: spi1_cs_rfid {
-					pinmux = <PIN_PC6__SPI1_NPCS2>;
+					pinmux = <PIN_PC6__GPIO>;
 					bias-disable;
 				};
 				

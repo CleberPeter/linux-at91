@@ -7,6 +7,8 @@
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
  */
+ 
+// #define DEBUG
 
 #include <linux/kernel.h>
 #include <linux/clk.h>
@@ -357,6 +359,12 @@ static void cs_activate(struct atmel_spi *as, struct spi_device *spi)
 	struct atmel_spi_device *asd = spi->controller_state;
 	unsigned active = spi->mode & SPI_CS_HIGH;
 	u32 mr;
+	
+	if (spi->chip_select == 0)
+	{
+		gpio_set_value(68, active);
+		dev_dbg(&spi->dev, "activate chip_select_0");
+	}
 
 	if (atmel_spi_is_v2(as)) {
 		spi_writel(as, CSR0 + 4 * spi->chip_select, asd->csr);
@@ -403,6 +411,8 @@ static void cs_activate(struct atmel_spi *as, struct spi_device *spi)
 	dev_dbg(&spi->dev, "activate %u%s, mr %08x\n",
 			asd->npcs_pin, active ? " (high)" : "",
 			mr);
+			
+	// udelay(5);
 }
 
 static void cs_deactivate(struct atmel_spi *as, struct spi_device *spi)
@@ -1234,6 +1244,13 @@ static int atmel_spi_setup(struct spi_device *spi)
 		if (as->use_cs_gpios)
 			gpio_direction_output(npcs_pin,
 					      !(spi->mode & SPI_CS_HIGH));
+		
+		if (spi->chip_select == 0)
+		{
+			gpio_direction_output(68, !(spi->mode & SPI_CS_HIGH));
+			dev_dbg(&spi->dev, "config chip_select_0");
+		}
+
 
 		asd->npcs_pin = npcs_pin;
 		spi->controller_state = asd;
@@ -1498,11 +1515,14 @@ static int atmel_spi_gpio_cs(struct platform_device *pdev)
 			return cs_gpio;
 
 		if (gpio_is_valid(cs_gpio)) {
+			dev_dbg(&pdev->dev, "is_gpio: %d", cs_gpio);
+			
 			ret = devm_gpio_request(&pdev->dev, cs_gpio,
 						dev_name(&pdev->dev));
 			if (ret)
 				return ret;
 		}
+		else dev_dbg(&pdev->dev, "is not gpio: %d", cs_gpio);
 	}
 
 	return 0;
@@ -1600,6 +1620,8 @@ static int atmel_spi_probe(struct platform_device *pdev)
 		master->num_chipselect = 4;
 	}
 
+	dev_dbg(&pdev->dev, "use_cs_gpios: %d", as->use_cs_gpios);
+	
 	ret = atmel_spi_gpio_cs(pdev);
 	if (ret)
 		goto out_unmap_regs;
