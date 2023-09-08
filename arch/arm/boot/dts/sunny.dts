@@ -312,18 +312,22 @@
 
 			panel: panel {
 
+
+				/* CAUTION: 
+					on update driver remember to update bootargs from uboot too 
+				*/
+				
 				/* blaze - 800 x 480
 					compatible = "shelly,sca07010-bfn-lnn", "simple-panel"; 
 				*/
 				
-				/* Mondial - FPC070-50-03 - 1024x600 
+				/* Mondial - FPC070-50-03/FPC070-50-15 - 1024x600 
 				compatible = "cdtech,s070pws19hp-fc21", "simple-panel";
 				*/
 				
-				
-				/* Mondial - FPC070-50-02 - 800 x 480 */
+				/* Mondial - FPC070-50-02 - 800 x 480 
 				compatible = "cdtech,s070swv29hg-dc44", "simple-panel";
-				
+				*/
 
 				backlight = <&backlight>;
 				power-supply = <&panel_reg>;
